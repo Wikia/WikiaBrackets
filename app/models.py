@@ -61,7 +61,7 @@ class Opponent(models.Model):
                           help_text="This is the URL of the article we're matching up")
     title = models.CharField(max_length=1024, help_text="The article title we're referring to (editable)")
     wiki = models.CharField(max_length=1024, help_text="The name of the wiki the article is from.")
-    blurbl = models.TextField(null=True, help_text="Add a blurb for this opponent here")
+    blurb = models.TextField(null=True, help_text="Add a blurb for this opponent here")
     thumbnail = models.URLField(max_length=1024,
                                 null=True,
                                 help_text="Automatically generated on creation, but editable")
