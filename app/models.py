@@ -111,6 +111,7 @@ class Opponent(models.Model):
     @property
     def json(self):
         return {
+            'url': self.url,
             'name': self.title,
             'wiki': self.wiki,
             'blurb': self.blurb,
