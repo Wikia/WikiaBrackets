@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'sekizai',
     'django_extensions',
     'dirtyfields',
+    'grappelli',
     'app',
 )
 
