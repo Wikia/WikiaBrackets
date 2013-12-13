@@ -5,5 +5,5 @@ urlpatterns = patterns('',
                        url(r'active_campaigns/?', views.active_campaigns),
                        url(r'campaign/(\d+)/?', views.campaign_data),
                        url(r'opponents/?', views.opponents),
-                       url(r'vote/(\d+)/(\d+)/?', views.vote),
+                       url(r'vote/?', views.vote),
 )
