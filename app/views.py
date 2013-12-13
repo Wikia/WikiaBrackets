@@ -1,8 +1,10 @@
 from django.http import HttpResponse
-import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.dateformat import format
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 import json
+import models
 
 
 def active_campaigns(request):
@@ -60,3 +62,22 @@ def opponents(request):
     data = dict([(opponent.id, opponent.json) for opponent in models.Opponent.objects.filter(id__in=ids.split(','))])
     return HttpResponse(json.dumps(data), content_type="application/json")
 
+
+@csrf_exempt
+@require_POST
+def vote(matchup_id, opponent_id):
+    try:
+        matchup = models.Matchup.objects.get(id=matchup_id)
+        new_vote = models.MatchupVote(matchup=matchup)
+        if matchup.opponent_1_id == opponent_id:
+            new_vote.for_opponent_1 = True
+        elif matchup.opponent_2_id == opponent_id:
+            new_vote.for_opponent_2 = True
+        else:
+            return HttpResponse(json.dumps({'message': 'opponent is not on this matchup'}),
+                                content_type="application/json", status=500)
+        new_vote.save()
+        return HttpResponse(json.dumps({'message': 'successfully voted'}), content_type="application/json", status=200)
+
+    except ObjectDoesNotExist:
+        return HttpResponse(json.dumps({'message': 'does not exist'}), content_type="application/json", status=500)
