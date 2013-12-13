@@ -67,8 +67,8 @@ def opponents(request):
 @require_POST
 def vote(request):
     try:
-        matchup_id = request.POST('matchup')
-        opponent_id = request.POST('opponent')
+        matchup_id = request.POST.get('matchup')
+        opponent_id = request.POST.get('opponent')
         if matchup_id is None or opponent_id is None:
             HttpResponse(json.dumps({'message': 'malformed request'}), content_type="application/json", status=500)
         matchup = models.Matchup.objects.get(id=matchup_id)
