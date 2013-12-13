@@ -33,7 +33,10 @@ class Campaign(models.Model):
 
     @property
     def num_opponents(self):
-        matchups = self.rounds.first().matchups.all()
+        first_round = self.rounds.first()
+        if first_round is None:
+            return 0
+        matchups = first_round.matchups.all()
         return len(
             filter(lambda x: x.opponent_1, matchups)
             + filter(lambda x: x.opponent_2, matchups)
