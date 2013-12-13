@@ -28,7 +28,7 @@ def campaign_data(request, campaign_id):
             'num_rounds': campaign.num_rounds,
             'num_opponents': campaign.num_opponents,
             'winner_id': campaign.winner.id if campaign.winner else None,
-            'winner_name': campaign.winner.title,
+            'winner_name': campaign.winner.title if campaign.winner else None,
             'active_round': campaign.active_round,
             'rounds': dict([
                 (campaign_round.round_ordinal,
