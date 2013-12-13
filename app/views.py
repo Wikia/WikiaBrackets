@@ -27,7 +27,7 @@ def campaign_data(request, campaign_id):
             'active_round': campaign.active_round,
             'num_rounds': campaign.num_rounds,
             'num_opponents': campaign.num_opponents,
-            'winner_id': campaign.winner.id,
+            'winner_id': campaign.winner.id if campaign.winner else None,
             'winner_name': campaign.winner.title,
             'active_round': campaign.active_round,
             'rounds': dict([
