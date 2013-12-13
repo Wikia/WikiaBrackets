@@ -65,8 +65,12 @@ def opponents(request):
 
 @csrf_exempt
 @require_POST
-def vote(matchup_id, opponent_id):
+def vote(request):
     try:
+        matchup_id = request.POST('matchup')
+        opponent_id = request.POST('opponent')
+        if matchup_id is None or opponent_id is None:
+            HttpResponse(json.dumps({'message': 'malformed request'}), content_type="application/json", status=500)
         matchup = models.Matchup.objects.get(id=matchup_id)
         new_vote = models.MatchupVote(matchup=matchup)
         if matchup.opponent_1_id == opponent_id:
