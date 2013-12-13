@@ -78,7 +78,7 @@ def vote(request):
         elif matchup.opponent_2_id == opponent_id:
             new_vote.for_opponent_2 = True
         else:
-            return HttpResponse(json.dumps({'message': 'opponent is not on this matchup'}),
+            return HttpResponse(json.dumps({'message': 'opponent %d is not in matchup %s' % (opponent_id, matchup_id)}),
                                 content_type="application/json", status=500)
         new_vote.save()
         return HttpResponse(json.dumps({'message': 'successfully voted'}), content_type="application/json", status=200)
