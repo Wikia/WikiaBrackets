@@ -48,7 +48,10 @@ class Campaign(models.Model):
 
     @property
     def winner(self):
-        last_round_winners = self.rounds.last().winners
+        last_round = self.rounds.last()
+        if last_round is None:
+            return None
+        last_round_winners = last_round.winners
         if len(last_round_winners) == 1:
             return last_round_winners[0]
 
