@@ -71,14 +71,14 @@ def vote(request):
         opponent_id = request.POST.get('opponent')
         if matchup_id is None or opponent_id is None:
             HttpResponse(json.dumps({'message': 'malformed request'}), content_type="application/json", status=500)
-        matchup = models.Matchup.objects.get(id=matchup_id)
+        matchup = models.Matchup.objects.get(id=int(matchup_id))
         new_vote = models.MatchupVote(matchup=matchup)
-        if matchup.opponent_1_id == opponent_id:
+        if matchup.opponent_1_id == int(opponent_id):
             new_vote.for_opponent_1 = True
-        elif matchup.opponent_2_id == opponent_id:
+        elif matchup.opponent_2_id == int(opponent_id):
             new_vote.for_opponent_2 = True
         else:
-            return HttpResponse(json.dumps({'message': 'opponent %d is not in matchup %s' % (opponent_id, matchup_id)}),
+            return HttpResponse(json.dumps({'message': 'opponent %s is not in matchup %s' % (opponent_id, matchup_id)}),
                                 content_type="application/json", status=500)
         new_vote.save()
         return HttpResponse(json.dumps({'message': 'successfully voted'}), content_type="application/json", status=200)
